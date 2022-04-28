@@ -1,0 +1,1235 @@
+
+;*********************************************************************
+;********** FUZZY VALUE FOR SULFUR DIOXODE (دی اکسید گوگرد) **********
+
+(deftemplate so2_level
+	0 1.005 ppm
+(
+	(good (0 1) (0.017 0.5) (0.035 0))
+	(moderate (0.035 0) (0.09 1) (0.145 0))
+	(unhealthy_sensitive (0.145 0) (0.185 1) (0.225 0))
+	(unhealthy (0.225 0) (0.265 1) (0.305 0))
+	(very_unhealthy (0.305 0) (0.455 1) (0.605 0))
+	(hazardous (0.605 0) (0.705 1) (0.805 0))
+	(very_hazardous (0.805 0) (1.005 1))
+))
+
+;********** FUZZY VALUE FOR NITROGEN DIOXODE  (دی اکسید نیتروژن) **********
+
+(deftemplate no2_level
+	0 2.04 ppm
+(
+	(good1 (0 1) (0.33 .5) (0.65 0))
+	(very_unhealthy1 (0.65 0) (1.0 1) (1.25 0))
+	(hazardous1 (1.25 0) (1.42 1) (1.65 0))
+	(very_hazardous1 (1.65 0) (2.04 1))
+))
+
+;********** FUZZY VALUE FOR MONOXIDE CARBON  (مونوکسید کربن) **********
+
+(deftemplate co_level
+	0 50.4 ppm
+(
+	(good2 (0 1) (4.5 0))
+	(moderate2 (4.5 0) (7.0 1) (9.5 0))
+	(unhealthy_sensitive2 (9.5 0) (11.0 1) (12.5 0))
+	(unhealthy2 (12.5 0) (14.0 1) (15.5 0))
+	(very_unhealthy2 (15.5 0) (23.0 1) (30.5 0))
+	(hazardous2 (30.5 0) (35.5 1) (40.5 0))
+	(very_hazardous2 (40.5 0) (50.4 1))
+))
+
+;********** FUZZY VALUE FOR OZONE  (ازن) **********
+
+(deftemplate o3_level
+	0.000 0.604 ppm
+(
+	(good3 (0.000 1) (0.065 0))
+	(moderate3 (0.065 0) (0.075 1) (0.085 0))
+	(unhealthy_sensitive3 (0.085 0) (0.095 1) (0.105 0))
+	(unhealthy3 (0.105 0) ( 0.115 1) (0.125 0))
+	(very_unhealthy3 (0.125 0) (0.265 1) (0.405 0))
+	(hazardous3 (0.405 0) (0.455 1) (0.505 0))
+	(very_hazardous3 (0.505 0) (0.604 1))
+))
+
+;********** FUZZY VALUE FOR  PARTICULATE MATTER  (ذرات معلق) **********
+
+(deftemplate pm_level
+	0 604 ugm/m3
+(
+	(good4 (0 1) (55 0))
+	(moderate4 (55 0) (110 1) (155 0))
+	(unhealthy_sensitive4 (155 0) (205 1) (255 0))
+	(unhealthy4 (255 0) (305 1) (355 0))
+	(very_unhealthy4 (355 0) (390 1) (425 0))
+	(hazardous4 (425 0) (465 1) (505 0))
+	(very_hazardous4 (505 0) (604 1))
+))
+;********** FUZZY VALUE FOR  PARTICULATE MATTER less 10m (ذرات معلق بزرگتر از 10 میکرون) **********
+
+(deftemplate pm10_level
+	0 550 ugm/m3
+(
+	(good5 (0 1) (55 0))
+	(moderate5 (55 0) (110 1) (155 0))
+	(unhealthy_sensitive5 (155 0) (205 1) (255 0))
+	(unhealthy5 (255 0) (305 1) (355 0))
+	(very_unhealthy5 (355 0) (390 1) (425 0))
+	(hazardous5 (425 0) (465 1) (505 0))
+	(very_hazardous5 (505 0) (550 1))
+))
+;********** FUZZY VALUE FOR  LEAD (سرب) **********
+
+(deftemplate lead_level
+	0.005 0.44 ugm/m3
+(
+	(good6 (0.005 1) (0.020 0))
+	(moderate6 (0.020 0) (0.040 1) (0.060 0))
+	(unhealthy_sensitive6 (0.060 0) (0.080 1) (0.1 0))
+	(unhealthy6 (0.10 0) (0.15 1) (0.20 0))
+	(very_unhealthy6 (0.20 0) (0.25 1) (0.30 0))
+	(hazardous6 (0.30 0) (0.35 1) (0.40 0))
+	(very_hazardous6 (0.40 0) (0.44 1))
+))
+
+;********** FUZZY VALUE FOR  AQI  (شاخص اندازه گیری) **********
+
+(deftemplate aqi_level
+	0 500 index
+(
+	(goodo (0 1) (51 0))
+	(moderateo (51 0) (76 1) (101 0))
+	(unhealthy_sensitiveo (101 0) (126 1) (151 0))
+	(unhealthyo (151 0) (176 1) (201 0))
+	(very_unhealthyo (201 0) (251 1) (301 0))
+	(hazardouso (301 0) (351 1) (401 0))
+	(very_hazardouso (401 0) (500 1))
+))
+
+;***************************************************************************************************************************************
+;************************************************** GETTING INPUT **********************************************************************
+(defrule get-information
+ (declare (salience 100))
+ =>
+(printout t "************************************************************************** ")
+(printout t "This project will diagnose level of pollution of air with AQI Index" crlf)
+
+(printout t  "Interpret Output Results:" crlf)
+(printout t "------------------------------------------------------------------------------------------ ")
+(printout t  crlf)
+(printout t  "If AQL Result be in 0 - 50 THis Means Air is Good and Have No Problem" crlf)
+(printout t "------------------------------------------------------------------------------------------ ")
+(printout t  crlf)
+(printout t  "If AQL Result be in 51 - 100 THis Means Air is Moderate and Have No Such Problem" crlf)
+(printout t "------------------------------------------------------------------------------------------ ")
+(printout t  crlf)
+(printout t  "If AQL Result be in 101 - 150 THis Means Air is Unhealthy for Sensitive Group and if you Have Special problem and some Special Sickness, We Recommend You dont Go Out" crlf)
+(printout t "------------------------------------------------------------------------------------------ ")
+(printout t  crlf)
+(printout t  "If AQL Result be in 151 - 200 THis Means Air is unhealthy and if you have no necessary work, Then Dont Go out" crlf)
+(printout t "------------------------------------------------------------------------------------------ ")
+(printout t  crlf)
+(printout t  "If AQL Result be in 201 - 300 THis Means Air is Very_unhealthy and if you didnt go out is Better  " crlf)
+(printout t "------------------------------------------------------------------------------------------ ")
+(printout t  crlf)
+(printout t  "If AQL Result be in 301 - 400 THis Means Air is Hazardous and you Should not go out" crlf)
+(printout t "------------------------------------------------------------------------------------------ ")
+(printout t  crlf)
+(printout t  "If AQL Result be in 401 - 500 THis Means Air is Very_Hazardous and air Have That Potential That Kill you, so Please dont go Out There" crlf)
+(printout t "------------------------------------------------------------------------------------------ ")
+(printout t  crlf)
+(printout t  "If Result Greater Than 33% System Suggest Consultation With Psychiatrist  " crlf)
+(printout t "**************************************************************************************************** ")
+(printout t  crlf)
+(printout t  "Please Select Appropriate Option that Describe Your Patient State " crlf)
+(printout t  crlf)
+
+(printout t "********************************************************************** ")
+(printout t  crlf)
+
+(printout t "please enter amount of so2_level  :" crlf)
+(printout t "good" crlf)
+(printout t "moderate" crlf)
+(printout t "unhealthy_sensitive" crlf)
+(printout t "unhealthy" crlf)
+(printout t "very_unhealthy" crlf)
+(printout t "hazardous" crlf)
+(printout t "very_hazardous" crlf)
+
+(bind ?s (read))
+(assert-string (format nil "(so2_level %s)" ?s))
+(printout t  crlf)
+
+(printout t "********************************************************************** ")
+(printout t  crlf)
+
+(printout t "please enter amount of no2_level  :" crlf)
+(printout t "good1" crlf)
+(printout t "very_unhealthy1" crlf)
+(printout t "hazardous1" crlf)
+(printout t "very_hazardous1" crlf)
+
+(bind ?sa (read))
+(assert-string (format nil "(no2_level %s)" ?sa))
+(printout t  crlf)
+
+(printout t "********************************************************************** ")
+(printout t  crlf)
+
+(printout t "Please Enter Amount of co_level :" crlf)
+(printout t "good2" crlf)
+(printout t "moderate2" crlf)
+(printout t "unhealthy_sensitive2" crlf)
+(printout t "unhealthy2" crlf)
+(printout t "very_unhealthy2" crlf)
+(printout t "hazardous2" crlf)
+(printout t "very_hazardous2" crlf)
+
+(bind ?c (read))
+(assert-string (format nil "(co_level %s)" ?c))
+(printout t  crlf)
+
+(printout t "********************************************************************** ")
+(printout t  crlf)
+
+(printout t "Please Enter Amount of O3 :" crlf)
+(printout t "good3" crlf)
+(printout t "moderate3" crlf)
+(printout t "unhealthy_sensitive3" crlf)
+(printout t "unhealthy3" crlf)
+(printout t "very_unhealthy3" crlf)
+(printout t "hazardous3" crlf)
+(printout t "very_hazardous3" crlf)
+
+(bind ?qqq (read))
+(assert-string (format nil "(o3_level %s)" ?qqq))
+(printout t  crlf)
+
+(printout t "********************************************************************** ")
+(printout t  crlf)
+
+(printout t "Please Enter Amount of PM :" crlf)
+(printout t "good4" crlf)
+(printout t "moderate4" crlf)
+(printout t "unhealthy_sensitive4" crlf)
+(printout t "unhealthy4" crlf)
+(printout t "very_unhealthy4" crlf)
+(printout t "hazardous4" crlf)
+(printout t "very_hazardous4" crlf)
+
+(bind ?zz (read))
+(assert-string (format nil "(pm_level %s)" ?zz))
+(printout t  crlf)
+
+(printout t "********************************************************************** ")
+(printout t  crlf)
+
+(printout t "Please Enter Amount of PM10 :" crlf)
+(printout t "good5" crlf)
+(printout t "moderate5" crlf)
+(printout t "unhealthy_sensitive5" crlf)
+(printout t "unhealthy5" crlf)
+(printout t "very_unhealthy5" crlf)
+(printout t "hazardous5" crlf)
+(printout t "very_hazardous5" crlf)
+
+(bind ?xx (read))
+(assert-string (format nil "(pm10_level %s)" ?xx))
+(printout t  crlf)
+
+(printout t "********************************************************************** ")
+(printout t  crlf)
+
+(printout t "Please Enter Amount of Lead :" crlf)
+(printout t "good6" crlf)
+(printout t "moderate6" crlf)
+(printout t "unhealthy_sensitive6" crlf)
+(printout t "unhealthy6" crlf)
+(printout t "very_unhealthy6" crlf)
+(printout t "hazardous6" crlf)
+(printout t "very_hazardous6" crlf)
+
+(bind ?gg (read))
+(assert-string (format nil "(lead_level %s)" ?gg))
+(printout t  crlf)
+
+(printout t "********************************************************************** ")
+(printout t  crlf)
+(printout t "********************************************************************** ")
+(printout t  crlf)
+)
+;**********************************************************************************************************************
+;************************************************** RULE 1 ************************************************************
+(defrule zero
+(so2_level good)
+(so2_level moderate)
+(so2_level unhealthy_sensitive)
+(so2_level unhealthy)
+(so2_level very_unhealthy)
+(so2_level hazardous)
+(so2_level very_hazardous)
+(no2_level good1)
+(no2_level very_unhealthy1)
+(no2_level hazardous1)
+(no2_level very_hazardous1)
+(co_level good2)
+(co_level moderate2)
+(co_level unhealthy_sensitive2)
+(co_level unhealthy2)
+(co_level very_unhealthy2)
+(co_level hazardous2)
+(co_level very_hazardous2)
+(o3_level good3)
+(o3_level moderate3)
+(o3_level unhealthy_sensitive3)
+(o3_level unhealthy3)
+(o3_level very_unhealthy3)
+(o3_level hazardous3)
+(o3_level very_hazardous3)
+(pm_level good4)
+(pm_level moderate4)
+(pm_level unhealthy_sensitive4)
+(pm_level unhealthy4)
+(pm_level very_unhealthy4)
+(pm_level hazardous4)
+(pm_level very_hazardous4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(if  (> ?first ?second) 
+   then (printout  t " first is bigger") 
+   else (if (> ?second ?first) then (printout  t " second is bigger"))))
+;************************************************** RULE 1 ************************************************************
+(defrule one
+(so2_level good)
+(no2_level good1)
+(co_level good2)
+(o3_level good3)
+(pm_level good4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is Good and Have No Problem" crlf)
+(assert (aqi_level goodo)))
+;************************************************** RULE 2 ************************************************************
+(defrule two
+(so2_level moderate)
+(no2_level good1)
+(co_level moderate2)
+(o3_level moderate3)
+(pm_level moderate4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Moderate and Have No Such Problem" crlf)
+(assert (aqi_level moderateo)))
+;************************************************** RULE 3 ************************************************************
+(defrule three
+(so2_level unhealthy_sensitive)
+(no2_level good1)
+(co_level unhealthy_sensitive2)
+(o3_level unhealthy_sensitive3)
+(pm_level unhealthy_sensitive4)
+(pm10_level unhealthy_sensitive5)
+(lead_level unhealthy_sensitive6)
+=>
+(printout t "THis Means Air is Unhealthy for Sensitive Group and if you Have Special problem and some Special Sickness, We Recommend You dont Go Out" crlf)
+(assert (aqi_level unhealthy_sensitiveo)))
+;************************************************** RULE 4 ************************************************************
+(defrule four
+(so2_level unhealthy)
+(no2_level good1)
+(co_level unhealthy2)
+(o3_level unhealthy3)
+(pm_level unhealthy4)
+(pm10_level unhealthy5)
+(lead_level unhealthy6)
+=>
+(printout t "THis Means Air is unhealthy and if you have no necessary work, Then Dont Go out" crlf)
+(assert (aqi_level unhealthyo)))
+;************************************************** RULE 5 ************************************************************
+(defrule five
+(so2_level very_unhealthy)
+(no2_level very_unhealthy1)
+(co_level very_unhealthy2)
+(o3_level very_unhealthy3)
+(pm_level very_unhealthy4)
+(pm10_level very_unhealthy5)
+(lead_level very_unhealthy6)
+=>
+(printout t "THis Means Air is Very_unhealthy and if you didnt go out is Better" crlf)
+(assert (aqi_level very_unhealthyo)))
+;************************************************** RULE 6 ************************************************************
+(defrule six
+(so2_level hazardous)
+(no2_level hazardous1)
+(co_level hazardous2)
+(o3_level hazardous3)
+(pm_level hazardous4)
+(pm10_level hazardous5)
+(lead_level hazardous6)
+=>
+(printout t "THis Means Air is Hazardous and you Should not go out" crlf)
+(assert (aqi_level hazardouso)))
+;************************************************** RULE 7 ************************************************************
+(defrule seven
+(so2_level very_hazardous)
+(no2_level very_hazardous1)
+(co_level very_hazardous2)
+(o3_level very_hazardous3)
+(pm_level very_hazardous4)
+(pm10_level very_hazardous5)
+(lead_level very_hazardous6)
+=>
+(printout t "THis Means Air is Very_Hazardous and air Have That Potential That Kill you, so Please dont go Out There" crlf)
+(assert (aqi_level very_hazardouso)))
+;************************************************** RULE 8 ************************************************************
+(defrule eight
+(declare (cf 0.6))
+(so2_level good)
+(no2_level good1)
+(co_level good2)
+(o3_level good3)
+(pm_level moderate4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is Good and Have No Problem" crlf)
+(assert (aqi_level goodo)))
+;************************************************** RULE 9 ************************************************************
+(defrule nine
+(declare (cf 0.6))
+(so2_level good)
+(no2_level good1)
+(co_level good2)
+(o3_level good3)
+(pm_level unhealthy_sensitive4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is Moderate and Have No Such Problem" crlf)
+(assert (aqi_level moderateo)))
+;************************************************** RULE 10 ************************************************************
+(defrule ten
+(declare (cf 0.8))
+(so2_level good)
+(no2_level good1)
+(co_level good2)
+(o3_level good3)
+(pm_level unhealthy4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is Moderate and Have No Such Problem" crlf)
+(assert (aqi_level moderateo)))
+;************************************************** RULE 11 ************************************************************
+(defrule eleven
+(declare (cf 0.6))
+(so2_level good)
+(no2_level good1)
+(co_level good2)
+(o3_level good3)
+(pm_level very_unhealthy4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is unhealthy and if you have no necessary work, Then Dont Go out" crlf)
+(assert (aqi_level unhealthyo)))
+;************************************************** RULE 12 ************************************************************
+(defrule twelve
+(declare (cf 0.6))
+(so2_level good)
+(no2_level good1)
+(co_level good2)
+(o3_level good3)
+(pm_level hazardous4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is Very_unhealthy and if you didnt go out is Better" crlf)
+(assert (aqi_level very_unhealthyo)))
+;************************************************** RULE 13 ************************************************************
+(defrule thirteen
+(declare (cf 0.4))
+(so2_level good)
+(no2_level good1)
+(co_level good2)
+(o3_level good3)
+(pm_level very_hazardous4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is Very_Hazardous and air Have That Potential That Kill you, so Please dont go Out There" crlf)
+(assert (aqi_level very_hazardouso)))
+;************************************************** RULE 14 ************************************************************
+(defrule fourteen
+(declare (cf 0.5))
+(so2_level good)
+(no2_level good1)
+(co_level good2)
+(o3_level good3)
+(pm_level very_unhealthy4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is unhealthy and if you have no necessary work, Then Dont Go out" crlf)
+(assert (aqi_level unhealthyo)))
+;************************************************** RULE 15 ************************************************************
+(defrule fifteen
+(declare (cf 0.6))
+(so2_level good)
+(no2_level good1)
+(co_level good2)
+(o3_level moderate3)
+(pm_level good4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is Good and Have No Problem" crlf)
+(assert (aqi_level goodo)))
+;************************************************** RULE 16 ************************************************************
+(defrule sixteen
+(declare (cf 0.6))
+(so2_level good)
+(no2_level good1)
+(co_level good2)
+(o3_level unhealthy_sensitive3)
+(pm_level good4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is Moderate and Have No Such Problem" crlf)
+(assert (aqi_level moderateo)))
+;************************************************** RULE 17 ************************************************************
+(defrule seventeen
+(declare (cf 0.6))
+(so2_level good)
+(no2_level good1)
+(co_level good2)
+(o3_level unhealthy3)
+(pm_level good4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is Moderate and Have No Such Problem" crlf)
+(assert (aqi_level moderateo)))
+;************************************************** RULE 18 ************************************************************
+(defrule eighteen
+(declare (cf 0.6))
+(so2_level good)
+(no2_level good1)
+(co_level good2)
+(o3_level very_unhealthy3)
+(pm_level good4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is unhealthy and if you have no necessary work, Then Dont Go out" crlf)
+(assert (aqi_level unhealthyo)))
+;************************************************** RULE 19 ************************************************************
+(defrule nineteen
+(declare (cf 0.6))
+(so2_level good)
+(no2_level good1)
+(co_level good2)
+(o3_level hazardous3)
+(pm_level good4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is Very_unhealthy and if you didnt go out is Better" crlf)
+(assert (aqi_level very_unhealthyo)))
+;************************************************** RULE 20 ************************************************************
+(defrule twenty
+(declare (cf 0.6))
+(so2_level good)
+(no2_level good1)
+(co_level good2)
+(o3_level very_hazardous3)
+(pm_level good4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is Very_Hazardous and air Have That Potential That Kill you, so Please dont go Out There" crlf)
+(assert (aqi_level very_hazardouso)))
+;************************************************** RULE 21 ************************************************************
+(defrule twenty-one
+(declare (cf 0.6))
+(so2_level good)
+(no2_level good1)
+(co_level moderate2)
+(o3_level good3)
+(pm_level good4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is Good and Have No Problem" crlf)
+(assert (aqi_level goodo)))
+;************************************************** RULE 22 ************************************************************
+(defrule twenty-two
+(declare (cf 0.3))
+(so2_level good)
+(no2_level good1)
+(co_level unhealthy_sensitive2)
+(o3_level good3)
+(pm_level good4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is Moderate and Have No Such Problem" crlf)
+(assert (aqi_level moderateo)))
+;************************************************** RULE 23 ************************************************************
+(defrule twenty-three
+(declare (cf 0.4))
+(so2_level good)
+(no2_level good1)
+(co_level unhealthy2)
+(o3_level good3)
+(pm_level good4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is Moderate and Have No Such Problem" crlf)
+(assert (aqi_level moderateo)))
+;************************************************** RULE 24 ************************************************************
+(defrule twenty-four
+(declare (cf 0.8))
+(so2_level good)
+(no2_level good1)
+(co_level very_unhealthy2)
+(o3_level good3)
+(pm_level good4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is Very_unhealthy and if you didnt go out is Better" crlf)
+(assert (aqi_level very_unhealthyo)))
+;************************************************** RULE 25 ************************************************************
+(defrule twenty-five
+(declare (cf 0.7))
+(so2_level good)
+(no2_level good1)
+(co_level hazardous2)
+(o3_level good3)
+(pm_level good4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is Very_unhealthy and if you didnt go out is Better" crlf)
+(assert (aqi_level very_unhealthyo)))
+;************************************************** RULE 26 ************************************************************
+(defrule twenty-six
+(declare (cf 0.5))
+(so2_level good)
+(no2_level good1)
+(co_level very_hazardous2)
+(o3_level good3)
+(pm_level good4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is Very_Hazardous and air Have That Potential That Kill you, so Please dont go Out There" crlf)
+(assert (aqi_level very_hazardouso)))
+;************************************************** RULE 27 ************************************************************
+(defrule twenty-seven
+(declare (cf 0.7))
+(so2_level good)
+(no2_level very_unhealthy1)
+(co_level good2)
+(o3_level good3)
+(pm_level good4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is Very_unhealthy and if you didnt go out is Better" crlf)
+(assert (aqi_level very_unhealthyo)))
+;************************************************** RULE 28 ************************************************************
+(defrule twenty-eight
+(declare (cf 0.6))
+(so2_level good)
+(no2_level hazardous1)
+(co_level good2)
+(o3_level good3)
+(pm_level good4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is Very_unhealthy and if you didnt go out is Better" crlf)
+(assert (aqi_level very_unhealthyo)))
+;************************************************** RULE 29 ************************************************************
+(defrule twenty-nine
+(declare (cf 0.8))
+(so2_level good)
+(no2_level very_hazardous1)
+(co_level good2)
+(o3_level good3)
+(pm_level good4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is Very_Hazardous and air Have That Potential That Kill you, so Please dont go Out There" crlf)
+(assert (aqi_level very_hazardouso)))
+;************************************************** RULE 30 ************************************************************
+(defrule thirty
+(declare (cf 0.6))
+(so2_level moderate)
+(no2_level good1)
+(co_level good2)
+(o3_level good3)
+(pm_level good4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is Good and Have No Problem" crlf)
+(assert (aqi_level goodo)))
+;************************************************** RULE 31 ************************************************************
+(defrule thirty-one
+(declare (cf 0.6))
+(so2_level unhealthy_sensitive)
+(no2_level good1)
+(co_level good2)
+(o3_level good3)
+(pm_level good4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is Moderate and Have No Such Problem" crlf)
+(assert (aqi_level moderateo)))
+;************************************************** RULE 32 ************************************************************
+(defrule thirty-two
+(declare (cf 0.6))
+(so2_level unhealthy)
+(no2_level good1)
+(co_level good2)
+(o3_level good3)
+(pm_level good4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is Moderate and Have No Such Problem" crlf)
+(assert (aqi_level moderateo)))
+;************************************************** RULE 33 ************************************************************
+(defrule thirty-three
+(declare (cf 0.6))
+(so2_level very_unhealthy)
+(no2_level good1)
+(co_level good2)
+(o3_level good3)
+(pm_level good4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is Very_unhealthy and if you didnt go out is Better" crlf)
+(assert (aqi_level very_unhealthyo)))
+;************************************************** RULE 34 ************************************************************
+(defrule thirty-four
+(declare (cf 0.6))
+(so2_level hazardous)
+(no2_level good1)
+(co_level good2)
+(o3_level good3)
+(pm_level good4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is Very_unhealthy and if you didnt go out is Better" crlf)
+(assert (aqi_level very_unhealthyo)))
+;************************************************** RULE 35 ************************************************************
+(defrule thirty-five
+(declare (cf 0.6))
+(so2_level very_hazardous)
+(no2_level good1)
+(co_level good2)
+(o3_level good3)
+(pm_level good4)
+(pm10_level good5)
+(lead_level good6)
+=>
+(printout t "THis Means Air is Very_Hazardous and air Have That Potential That Kill you, so Please dont go Out There" crlf)
+(assert (aqi_level very_hazardouso)))
+;************************************************** RULE 36 ************************************************************
+(defrule thirty-six
+(declare (cf 0.5))
+(so2_level moderate)
+(no2_level good1)
+(co_level moderate2)
+(o3_level moderate3)
+(pm_level good4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Good and Have No Problem" crlf)
+(assert (aqi_level goodo)))
+;************************************************** RULE 37 ************************************************************
+(defrule thirty-seven
+(declare (cf 0.2))
+(so2_level moderate)
+(no2_level good1)
+(co_level moderate2)
+(o3_level moderate3)
+(pm_level unhealthy_sensitive4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Moderate and Have No Such Problem" crlf)
+(assert (aqi_level moderateo)))
+;************************************************** RULE 38 ************************************************************
+(defrule thirty-eight
+(declare (cf 0.1))
+(so2_level moderate)
+(no2_level good1)
+(co_level moderate2)
+(o3_level moderate3)
+(pm_level unhealthy4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Moderate and Have No Such Problem" crlf)
+(assert (aqi_level moderateo)))
+;************************************************** RULE 39 ************************************************************
+(defrule thirty-nine
+(declare (cf 0.8))
+(so2_level moderate)
+(no2_level good1)
+(co_level moderate2)
+(o3_level moderate3)
+(pm_level very_unhealthy4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Hazardous and you Should not go out" crlf)
+(assert (aqi_level hazardouso)))
+;************************************************** RULE 40 ************************************************************
+(defrule fourty
+(declare (cf 0.7))
+(so2_level moderate)
+(no2_level good1)
+(co_level moderate2)
+(o3_level moderate3)
+(pm_level hazardous4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Very_Hazardous and air Have That Potential That Kill you, so Please dont go Out There" crlf)
+(assert (aqi_level very_hazardouso)))
+;************************************************** RULE 41 ************************************************************
+(defrule fourty-one
+(declare (cf 0.7))
+(so2_level moderate)
+(no2_level good1)
+(co_level moderate2)
+(o3_level moderate3)
+(pm_level very_hazardous4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Very_Hazardous and air Have That Potential That Kill you, so Please dont go Out There" crlf)
+(assert (aqi_level very_hazardouso)))
+;************************************************** RULE 42 ************************************************************
+(defrule fourty-two
+(declare (cf 0.7))
+(so2_level moderate)
+(no2_level good1)
+(co_level moderate2)
+(o3_level very_hazardous3)
+(pm_level moderate4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Moderate and Have No Such Problem" crlf)
+(assert (aqi_level moderateo)))
+;************************************************** RULE 43 ************************************************************
+(defrule fourty-three
+(declare (cf 0.5))
+(so2_level moderate)
+(no2_level good1)
+(co_level moderate2)
+(o3_level hazardous3)
+(pm_level moderate4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Hazardous and you Should not go out" crlf)
+(assert (aqi_level hazardouso)))
+;************************************************** RULE 44 ************************************************************
+(defrule fourty-four
+(declare (cf 0.1))
+(so2_level moderate)
+(no2_level good1)
+(co_level moderate2)
+(o3_level very_unhealthy3)
+(pm_level moderate4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Very_unhealthy and if you didnt go out is Better" crlf)
+(assert (aqi_level very_unhealthyo)))
+;************************************************** RULE 45 ************************************************************
+(defrule fourty-five
+(declare (cf 0.8))
+(so2_level moderate)
+(no2_level good1)
+(co_level moderate2)
+(o3_level unhealthy3)
+(pm_level moderate4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Unhealthy for Sensitive Group and if you Have Special problem and some Special Sickness, We Recommend You dont Go Out" crlf)
+(assert (aqi_level unhealthy_sensitiveo)))
+;************************************************** RULE 46 ************************************************************
+(defrule fourty-six
+(declare (cf 0.8))
+(so2_level moderate)
+(no2_level good1)
+(co_level moderate2)
+(o3_level unhealthy_sensitive3)
+(pm_level moderate4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Moderate and Have No Such Problem" crlf)
+(assert (aqi_level moderateo)))
+;************************************************** RULE 47 ************************************************************
+(defrule fourty-seven
+(declare (cf 0.7))
+(so2_level moderate)
+(no2_level good1)
+(co_level moderate2)
+(o3_level good3)
+(pm_level moderate4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Moderate and Have No Such Problem" crlf)
+(assert (aqi_level moderateo)))
+;************************************************** RULE 48 ************************************************************
+(defrule fourty-eight
+(declare (cf 0.4))
+(so2_level moderate)
+(no2_level good1)
+(co_level good2)
+(o3_level moderate3)
+(pm_level moderate4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Good and Have No Problem" crlf)
+(assert (aqi_level goodo)))
+;************************************************** RULE 49 ************************************************************
+(defrule fourty-nine
+(declare (cf 0.8))
+(so2_level moderate)
+(no2_level good1)
+(co_level unhealthy_sensitive2)
+(o3_level moderate3)
+(pm_level moderate4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Unhealthy for Sensitive Group and if you Have Special problem and some Special Sickness, We Recommend You dont Go Out" crlf)
+(assert (aqi_level unhealthy_sensitiveo)))
+;************************************************** RULE 50 ************************************************************
+(defrule fifty
+(declare (cf 0.3))
+(so2_level moderate)
+(no2_level good1)
+(co_level unhealthy2)
+(o3_level moderate3)
+(pm_level moderate4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is unhealthy and if you have no necessary work, Then Dont Go out" crlf)
+(assert (aqi_level unhealthyo)))
+;************************************************** RULE 51 ************************************************************
+(defrule fifty-one
+(declare (cf 0.7))
+(so2_level moderate)
+(no2_level good1)
+(co_level very_unhealthy2)
+(o3_level moderate3)
+(pm_level moderate4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Very_unhealthy and if you didnt go out is Better" crlf)
+(assert (aqi_level very_unhealthyo)))
+;************************************************** RULE 52 ************************************************************
+(defrule fifty-two
+(declare (cf 0.7))
+(so2_level moderate)
+(no2_level good1)
+(co_level hazardous2)
+(o3_level moderate3)
+(pm_level moderate4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Hazardous and you Should not go out" crlf)
+(assert (aqi_level hazardouso)))
+;************************************************** RULE 53 ************************************************************
+(defrule fifty-three
+(declare (cf 0.7))
+(so2_level moderate)
+(no2_level good1)
+(co_level very_hazardous2)
+(o3_level moderate3)
+(pm_level moderate4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Very_Hazardous and air Have That Potential That Kill you, so Please dont go Out There" crlf)
+(assert (aqi_level very_hazardouso)))
+;************************************************** RULE 54 ************************************************************
+(defrule fifty-four
+(declare (cf 0.6))
+(so2_level moderate)
+(no2_level very_unhealthy1)
+(co_level moderate2)
+(o3_level moderate3)
+(pm_level moderate4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Very_unhealthy and if you didnt go out is Better" crlf)
+(assert (aqi_level very_unhealthyo)))
+;************************************************** RULE 55 ************************************************************
+(defrule fifty-five
+(declare (cf 0.5))
+(so2_level moderate)
+(no2_level hazardous1)
+(co_level moderate2)
+(o3_level moderate3)
+(pm_level moderate4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Very_Hazardous and air Have That Potential That Kill you, so Please dont go Out There" crlf)
+(assert (aqi_level very_hazardouso)))
+;************************************************** RULE 56 ************************************************************
+(defrule fifty-six
+(declare (cf 0.8))
+(so2_level moderate)
+(no2_level very_hazardous1)
+(co_level moderate2)
+(o3_level moderate3)
+(pm_level moderate4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Very_Hazardous and air Have That Potential That Kill you, so Please dont go Out There" crlf)
+(assert (aqi_level very_hazardouso)))
+;************************************************** RULE 57 ************************************************************
+(defrule fifty-seven
+(declare (cf 0.4))
+(so2_level good)
+(no2_level good1)
+(co_level moderate2)
+(o3_level moderate3)
+(pm_level moderate4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Moderate and Have No Such Problem" crlf)
+(assert (aqi_level moderateo)))
+;************************************************** RULE 58 ************************************************************
+(defrule fifty-eight
+(declare (cf 0.2))
+(so2_level unhealthy_sensitive)
+(no2_level good1)
+(co_level moderate2)
+(o3_level moderate3)
+(pm_level moderate4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Unhealthy for Sensitive Group and if you Have Special problem and some Special Sickness, We Recommend You dont Go Out" crlf)
+(assert (aqi_level unhealthy_sensitiveo)))
+;************************************************** RULE 59 ************************************************************
+(defrule fifty-nine
+(declare (cf 0.3))
+(so2_level unhealthy)
+(no2_level good1)
+(co_level moderate2)
+(o3_level moderate3)
+(pm_level moderate4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Unhealthy for Sensitive Group and if you Have Special problem and some Special Sickness, We Recommend You dont Go Out" crlf)
+(assert (aqi_level unhealthy_sensitiveo)))
+;************************************************** RULE 60 ************************************************************
+(defrule sixty
+;(declare (cf 0.8))
+(so2_level very_unhealthy)
+(no2_level good1)
+(co_level moderate2)
+(o3_level moderate3)
+(pm_level moderate4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Very_unhealthy and if you didnt go out is Better" crlf)
+(assert (aqi_level very_unhealthyo)))
+;************************************************** RULE 61 ************************************************************
+(defrule sixty-one
+(declare (cf 0.5))
+(so2_level hazardous)
+(no2_level good1)
+(co_level moderate2)
+(o3_level moderate3)
+(pm_level moderate4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Hazardous and you Should not go out" crlf)
+(assert (aqi_level hazardouso)))
+;************************************************** RULE 62 ************************************************************
+(defrule sixty-two
+(declare (cf 0.5))
+(so2_level very_hazardous)
+(no2_level good1)
+(co_level moderate2)
+(o3_level moderate3)
+(pm_level moderate4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Very_Hazardous and air Have That Potential That Kill you, so Please dont go Out There" crlf)
+(assert (aqi_level very_hazardouso)))
+;************************************************** RULE 63 ************************************************************
+(defrule sixty-three
+(declare (cf 0.6))
+(so2_level moderate)
+(no2_level good1)
+(co_level unhealthy_sensitive2)
+(o3_level unhealthy_sensitive3)
+(pm_level unhealthy_sensitive4)
+(pm10_level unhealthy_sensitive5)
+(lead_level unhealthy_sensitive6)
+=>
+(printout t "THis Means Air is Unhealthy for Sensitive Group and if you Have Special problem and some Special Sickness, We Recommend You dont Go Out" crlf)
+(assert (aqi_level unhealthy_sensitiveo)))
+;************************************************** RULE 64 ************************************************************
+(defrule sixty-four
+(declare (cf 0.7))
+(so2_level moderate)
+(no2_level good1)
+(co_level unhealthy2)
+(o3_level unhealthy3)
+(pm_level unhealthy4)
+(pm10_level unhealthy_sensitive5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is unhealthy and if you have no necessary work, Then Dont Go out" crlf)
+(assert (aqi_level unhealthyo)))
+;************************************************** RULE 65 ************************************************************
+(defrule sixty-five
+(declare (cf 0.7))
+(so2_level good)
+(no2_level good1)
+(co_level moderate2)
+(o3_level unhealthy3)
+(pm_level very_unhealthy4)
+(pm10_level unhealthy5)
+(lead_level unhealthy_sensitive6)
+=>
+(printout t "THis Means Air is Hazardous and you Should not go out" crlf)
+(assert (aqi_level hazardouso)))
+;************************************************** RULE 66 ************************************************************
+(defrule sixty-six
+(declare (cf 0.7))
+(so2_level moderate)
+(no2_level good1)
+(co_level moderate2)
+(o3_level unhealthy3)
+(pm_level hazardous4)
+(pm10_level unhealthy5)
+(lead_level unhealthy_sensitive6)
+=>
+(printout t "THis Means Air is Hazardous and you Should not go out" crlf)
+(assert (aqi_level hazardouso)))
+;************************************************** RULE 67 ************************************************************
+(defrule sixty-seven
+(declare (cf 0.7))
+(so2_level moderate)
+(no2_level good1)
+(co_level hazardous2)
+(o3_level unhealthy3)
+(pm_level very_unhealthy4)
+(pm10_level hazardous5)
+(lead_level unhealthy6)
+=>
+(printout t "THis Means Air is Very_Hazardous and air Have That Potential That Kill you, so Please dont go Out There" crlf)
+(assert (aqi_level very_hazardouso)))
+;************************************************** RULE 68 ************************************************************
+(defrule sixty-eight
+(declare (cf 0.7))
+(so2_level very_hazardous)
+(no2_level good1)
+(co_level good2)
+(o3_level unhealthy3)
+(pm_level very_unhealthy4)
+(pm10_level hazardous5)
+(lead_level unhealthy6)
+=>
+(printout t "THis Means Air is Very_Hazardous and air Have That Potential That Kill you, so Please dont go Out There" crlf)
+(assert (aqi_level very_hazardouso)))
+;************************************************** RULE 69 ************************************************************
+(defrule sixty-nine
+(declare (cf 0.7))
+(so2_level hazardous)
+(no2_level good1)
+(co_level hazardous2)
+(o3_level unhealthy3)
+(pm_level very_unhealthy4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Hazardous and you Should not go out" crlf)
+(assert (aqi_level hazardouso)))
+;************************************************** RULE 70 ************************************************************
+(defrule seventy
+(declare (cf 0.7))
+(so2_level moderate)
+(no2_level very_unhealthy1)
+(co_level good2)
+(o3_level unhealthy3)
+(pm_level unhealthy_sensitive4)
+(pm10_level moderate5)
+(lead_level moderate6)
+=>
+(printout t "THis Means Air is Hazardous and you Should not go out" crlf)
+(assert (aqi_level hazardouso)))
+
+
+;*********************************************************************************************************************
+;************************************************** STEP OF FUZZIFY **************************************************
+
+
+
+
+
+(defrule crisp-result-1 "with moment defuzzification"
+      (declare (salience -10))
+      ?f <- (aqi_level ?)
+      ?t <- (aqi_level ?d)
+      =>
+      (bind ?result (moment-defuzzify ?f))
+	  (printout t  crlf)
+	  (printout t  crlf)
+      (printout t "With Moment Defuzzify :" crlf)
+      (printout t "AQI Level Is =" ?result "  index" crlf))
+    
+;*********************************************************************************************************************
+;************************************************** RETURN CERTAINITY FACTOR *****************************************
+
+(defrule crisp-result-3 "with Certainity Factor"
+     (declare (salience -11))
+   ?t <- (aqi_level ?)
+     =>
+      (printout t "****************************************************************************************** ")
+      (printout t  crlf)
+      (printout t ?t  "Diagnosed With Certainity :" (get-cf ?t) crlf))
